@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>::after</title>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,800italic' rel='stylesheet' type='text/css'>
+        <style>
+            html, body { 
+                font-family: Open Sans, sans-serif; 
+                font-size: 1.5em; color: #444; 
+            }
+            
+            input[type=text]{
+                font-size: 120%;
+                width:80%;
+            }
+            
+            ul.todo li.checked::after{
+                content: "";
+                background-image: url("check.png");
+                display:inline-block;
+                width:35px;
+                height:35px;
+                margin-left: 20px;
+                background-size: cover;
+            }
+            ul.todo li.checked{
+                text-decoration: line-through;
+                color:rgba(50,50,50,0.4);
+            }
+            .bubble {
+                color: white;
+                background-color: #777;
+                background-image: linear-gradient(0deg, #777, #aaa);
+                padding: 60px;
+                width: 80%;
+                margin: 0 auto;
+                text-align: center;
+                border-radius: 40px;
+                position: relative;
+            }
+            
+            .bubble::before {
+                content: "";
+                width: 60px;
+                height: 60px;
+                background-color: #777;
+                border-radius: 100px;
+                position: absolute;
+                bottom: -30px;
+                left: 40px;
+                z-index: -10;
+            }
+            
+            .bubble::after {
+                content: "";
+                width: 60px;
+                height: 60px;
+                background-color: white;
+                border-radius: 100px;
+                position: absolute;
+                bottom: -40px;
+                left: 60px;
+                z-index: -5;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h3>To-Do List</h3>
+        <ul class="todo">
+        </ul>
+        
+        <div class="bubble">
+            <input type="text" id="todo-add">
+        </div>
+        
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            
+            var itemCounter = 0;
+            $(document).ready(function(){
+                for (var x in localStorage){
+                    $(".todo").append(localStorage.getItem(x));
+                    itemCounter++;
+                }
+                $(".todo").on("mousedown", "li", handleClick);
+                $(".todo").on("dblclick", "li", function(event){
+                    removeItem($(this));
+                });
+                
+                $("#todo-add").keypress( function(e){
+                    //13 is enter
+                    if (e.keyCode === 13){
+                        var appendVal = "<li data-id='"+itemCounter+"'>"+$(this).val()+"</li>";
+                        $(".todo").append(appendVal);
+                        $(this).val("");
+                        localStorage.setItem(itemCounter++, appendVal);
+                    }
+                });
+                
+                
+                
+                function removeItem(x){
+                    var id = x.data("id");
+                    localStorage.removeItem(id);
+                    x.remove();
+                }
+                function handleClick(event){
+                    event.preventDefault();
+                    console.log($(this));
+                    if (event.which == 1){
+                        $(this).addClass("checked");
+                    }
+                    else if (event.which === 2){
+                        $(this).removeClass("checked");
+                    }
+                    else{
+                        removeItem($(this));
+                    }
+                }
+            });
+            
+            
+            
+        </script>
+    </body>
+</html>
