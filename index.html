@@ -75,6 +75,7 @@
         </div>
         
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="doubletap.js"></script>
         <script>
             
             var itemCounter = 0;
@@ -84,7 +85,7 @@
                     itemCounter++;
                 }
                 $(".todo").on("mousedown", "li", handleClick);
-                $(".todo").on("dblclick", "li", function(event){
+                $(".todo").on("dblclick doubletap", "li", function(event){
                     removeItem($(this));
                 });
                 
