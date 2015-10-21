@@ -2,16 +2,22 @@
 <html>
     <head>
         <title>::after</title>
-        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,800italic' rel='stylesheet' type='text/css'>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <link href='https://fonts.googleapis.com/css?family=Dancing+Script:700' rel='stylesheet' type='text/css'>
         <style>
             html, body { 
-                font-family: Open Sans, sans-serif; 
+                font-family: Dancing Script, cursive; 
                 font-size: 1.5em; color: #444; 
+                background-image: url("paper.jpg");
+                font-weight:700;
             }
             
             input[type=text]{
-                font-size: 120%;
+                font-size: 100%;
                 width:80%;
+                border: 2px solid #999;
+                background-color: rgba(222,222,222,0.3);
+                font-family: Dancing Script, cursive; 
             }
             
             ul.todo li.checked::after{
@@ -30,7 +36,7 @@
             .bubble {
                 color: white;
                 background-color: #777;
-                background-image: linear-gradient(0deg, #777, #aaa);
+                background-image: linear-gradient(0deg, #333, #E3CD88);
                 padding: 60px;
                 width: 80%;
                 margin: 0 auto;
@@ -55,71 +61,112 @@
                 content: "";
                 width: 60px;
                 height: 60px;
-                background-color: white;
+                background-image: url("paper.jpg");
                 border-radius: 100px;
                 position: absolute;
                 bottom: -40px;
                 left: 60px;
                 z-index: -5;
             }
+            h3{
+                text-decoration: underline;
+            }
+            .container{
+                width:70%;
+                box-sizing:border-box;
+                float:left;
+                margin:0;
+            }
+            .svg-container{
+                background-image: url(teacher.svg);
+                width:30%;
+                height: 0;
+                box-sizing:border-box;
+                float:right;
+                background-repeat: no-repeat;
+            }
+            .svg-container-mobile{
+                background-image: url(teacher.svg);
+                width:70%;
+                box-sizing:border-box;
+                float:right;
+                background-repeat: no-repeat;
+            }
         </style>
     </head>
 
     <body>
-        <h3>To-Do List</h3>
-        <ul class="todo">
-        </ul>
+        <div class="container">
+            <h3>To-Do List</h3>
+            <ul class="todo">
+            </ul>
         
-        <div class="bubble">
-            <input type="text" id="todo-add">
+            <div class="bubble">
+                <input type="text" id="todo-add">
+            </div>
+        </div>
+        <div class="svg-container" id="svg-container">
+        
         </div>
         
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script src="doubletap.js"></script>
         <script>
-            
-            var itemCounter = 0;
             $(document).ready(function(){
-                for (var x in localStorage){
-                    $(".todo").append(localStorage.getItem(x));
-                    itemCounter++;
+                if (window.innerHeight > window.innerWidth){
+                    //it's mobile
+                    $(".svg-container")
+                        .addClass("svg-container-mobile")
+                        .removeClass("svg-container");
+                    $(".container").removeClass("container");
                 }
-                $(".todo").on("mousedown", "li", handleClick);
-                $(".todo").on("dblclick doubletap", "li", function(event){
-                    removeItem($(this));
-                });
-                
-                $("#todo-add").keypress( function(e){
-                    //13 is enter
-                    if (e.keyCode === 13){
-                        var appendVal = "<li data-id='"+itemCounter+"'>"+$(this).val()+"</li>";
-                        $(".todo").append(appendVal);
-                        $(this).val("");
-                        localStorage.setItem(itemCounter++, appendVal);
+                var svgWidth = $("#svg-container").width();
+                $("#svg-container").css("height", svgWidth*1.62);
+                var itemCounter = 0;
+                $(document).ready(function(){
+                    for (var x in localStorage){
+                        $(".todo").append(localStorage.getItem(x));
+                        itemCounter++;
                     }
-                });
-                
-                
-                
-                function removeItem(x){
-                    var id = x.data("id");
-                    localStorage.removeItem(id);
-                    x.remove();
-                }
-                function handleClick(event){
-                    event.preventDefault();
-                    console.log($(this));
-                    if (event.which == 1){
-                        $(this).addClass("checked");
-                    }
-                    else if (event.which === 2){
-                        $(this).removeClass("checked");
-                    }
-                    else{
+                    $(".todo").on("mousedown", "li", handleClick);
+                    $(".todo").on("dblclick doubletap", "li", function(event){
                         removeItem($(this));
+                    });
+
+                    $("#todo-add").keypress( function(e){
+                        //13 is enter
+                        if (e.keyCode === 13){
+                            var appendVal = "<li data-id='"+itemCounter+"'>"+$(this).val()+"</li>";
+                            $(".todo").append(appendVal);
+                            $(this).val("");
+                            localStorage.setItem(itemCounter++, appendVal);
+                        }
+                    });
+
+
+
+                    function removeItem(x){
+                        var id = x.data("id");
+                        localStorage.removeItem(id);
+                        x.remove();
                     }
-                }
+                    function handleClick(event){
+                        event.preventDefault();
+                        console.log($(this));
+                        if (event.which == 1){
+                            $(this).addClass("checked");
+                        }
+                        else if (event.which === 2){
+                            $(this).removeClass("checked");
+                        }
+                        else{
+                            removeItem($(this));
+                        }
+                    }
+                });
+                
             });
+            
             
             
             
