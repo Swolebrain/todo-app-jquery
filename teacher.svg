@@ -1,5 +1,10 @@
 <?xml version="1.0"?>
 <svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:svg="http://www.w3.org/2000/svg" id="svg14755" viewBox="0 0 202.78 336.09" version="1.1">
+  <style>
+    #path9003, #path8895{
+      fill: #000;
+    }
+  </style>
   <defs id="defs14757">
     <clipPath id="clipPath9385" clipPathUnits="userSpaceOnUse">
       <path id="path9387" d="m728.65 494.4h11.552v-10.832h-11.552v10.832z"/>
