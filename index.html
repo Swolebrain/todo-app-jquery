@@ -3,30 +3,30 @@
     <head>
         <title>::after</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-        <link href='https://fonts.googleapis.com/css?family=Dancing+Script:700' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Rokkitt' rel='stylesheet' type='text/css'>
         <style>
             html, body { 
-                font-family: Dancing Script, cursive; 
+                font-family: Rokkitt, serif; 
                 font-size: 1.5em; color: #444; 
                 background-image: url("paper.jpg");
                 font-weight:700;
             }
-            
+          
             input[type=text]{
-                font-size: 100%;
+                font-size: 0.8em;
                 width:80%;
                 border: 2px solid #999;
                 background-color: rgba(222,222,222,0.3);
-                font-family: Dancing Script, cursive; 
+                font-family: Rokkitt, serif; 
             }
             
-            ul.todo li.checked::after{
+            ul.todo li.checked::before{
                 content: "";
                 background-image: url("check.png");
                 display:inline-block;
                 width:35px;
                 height:35px;
-                margin-left: 20px;
+                margin-right: 20px;
                 background-size: cover;
             }
             ul.todo li.checked{
@@ -136,7 +136,8 @@
                     $("#todo-add").keypress( function(e){
                         //13 is enter
                         if (e.keyCode === 13){
-                            var appendVal = "<li data-id='"+itemCounter+"'>"+$(this).val()+"</li>";
+                          var id = new Date().getTime();
+                            var appendVal = "<li data-id='"+id+"'>"+$(this).val()+"</li>";
                             $(".todo").append(appendVal);
                             $(this).val("");
                             localStorage.setItem(itemCounter++, appendVal);
@@ -154,7 +155,7 @@
                         event.preventDefault();
                         console.log($(this));
                         if (event.which == 1){
-                            $(this).addClass("checked");
+                          $(this).addClass("checked");
                         }
                         else if (event.which === 2){
                             $(this).removeClass("checked");
@@ -167,7 +168,7 @@
                 
             });
             
-            
+          
             
             
         </script>
